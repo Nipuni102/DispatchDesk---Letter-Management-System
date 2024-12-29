@@ -1,36 +1,32 @@
-import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./Components/LoginPage";
-import Dashboard from "./Components/Dashboard";
-import NewPage from "./Components/NewPage";
-import Layout from "./Components/Layout";
+import Layout from "./Components/Layout"; // Import Layout
+import LoginPage from "./Components/LoginPage"; // Import LoginPage
+import Dashboard from "./Components/Dashboard"; // Import Dashboard
+import NewPage from "./Components/NewPage"; // Import NewPage
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem("authToken")
-  );
-
-  const handleLogin = () => setIsLoggedIn(true);
-
   return (
     <Router>
-       <Layout>
       <Routes>
-        <Route
-          path="/login"
-          element={!isLoggedIn ? <LoginPage onLogin={handleLogin} /> : <Navigate to="/dashboard" />}
-        />
-        <Route
-          path="/dashboard"
-          element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}
-        />
-        <Route path="*" element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />} />
+        {/* Default route redirects to Login Page */}
+        <Route path="/" element={<Navigate to="/login" />} />
 
-        <Route path="/new" element={<NewPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      
+        {/* Route without Sidebar */}
+        <Route path="/login" element={<LoginPage />} />
+
+        {/* Routes with Sidebar */}
+        <Route
+          path="/*"
+          element={
+            <Layout>
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/new" element={<NewPage />} />
+              </Routes>
+            </Layout>
+          }
+        />
       </Routes>
-      </Layout>
     </Router>
   );
 }

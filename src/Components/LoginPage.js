@@ -1,22 +1,21 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/LoginPage.css";
 
-const LoginPage = ({ onLogin }) => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    const mockUser = { email: "test@example.com", password: "123456" };
-
-    if (email === mockUser.email && password === mockUser.password) {
-      setError("");
+    // Mock login validation
+    if (email === "test@example.com" && password === "password") {
       localStorage.setItem("authToken", "dummy-token");
-      onLogin();
+      navigate("/dashboard"); // Redirect to dashboard after login
     } else {
-      setError("Invalid email or password.");
+      setError("Invalid email or password");
     }
   };
 
@@ -30,12 +29,14 @@ const LoginPage = ({ onLogin }) => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
         <button type="submit">Login</button>
       </form>
