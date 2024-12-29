@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import LoginPage from "./Components/LoginPage";
 import Dashboard from "./Components/Dashboard";
 import NewPage from "./Components/NewPage";
+import Layout from "./Components/Layout";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -13,6 +14,7 @@ function App() {
 
   return (
     <Router>
+       <Layout>
       <Routes>
         <Route
           path="/login"
@@ -25,7 +27,10 @@ function App() {
         <Route path="*" element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />} />
 
         <Route path="/new" element={<NewPage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      
       </Routes>
+      </Layout>
     </Router>
   );
 }
