@@ -3,6 +3,7 @@ import Layout from "./Components/Layout"; // Import Layout
 import LoginPage from "./Components/LoginPage"; // Import LoginPage
 import Dashboard from "./Components/Dashboard"; // Import Dashboard
 import NewPage from "./Components/NewPage"; // Import NewPage
+import Approvals from "./Components/Approvals";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/new" element={<NewPage />} />
+                <Route path="/approvals" element={<Approvals />} />
+
               </Routes>
             </Layout>
           }
