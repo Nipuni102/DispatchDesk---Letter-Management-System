@@ -6,7 +6,7 @@
     margin-left: 200px; /* To leave space for the sidebar */
   }
   .content {
-    overflow: hidden; /* Disable scrolling for the dashboard */
+    overflow-y: auto; /* Disable scrolling for the dashboard */
     padding: 20px; /* Keep padding for content layout */
   }
   .dashboard-content h1 {
