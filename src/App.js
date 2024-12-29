@@ -4,6 +4,7 @@ import LoginPage from "./Components/LoginPage"; // Import LoginPage
 import Dashboard from "./Components/Dashboard"; // Import Dashboard
 import NewPage from "./Components/NewPage"; // Import NewPage
 import Approvals from "./Components/Approvals";
+import EstablishmentReg from "./Components/EstablishmentReg";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/new" element={<NewPage />} />
                 <Route path="/approvals" element={<Approvals />} />
+                <Route path="/establishment/registered" element={<EstablishmentReg />} />fw
 
               </Routes>
             </Layout>

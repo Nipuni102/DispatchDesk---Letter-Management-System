@@ -22,8 +22,8 @@ const Approvals = () => {
   ];
 
   return (
-    <div className="approvals-container">
-      {/* Header Bar */}
+    <div className="approvals-page">
+      {/* Full-width Header Bar */}
       <div className="header-bar">
         <h1>Approvals</h1>
       </div>
