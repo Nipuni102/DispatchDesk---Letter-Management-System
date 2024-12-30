@@ -167,3 +167,75 @@
   font-style: italic;
   padding: 20px;
 }
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Content */
+.modal-content {
+  background: white;
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left;
+}
+
+/* Modal Header */
+.modal-content h2 {
+  margin-top: 0;
+  color: #212a55;
+}
+
+/* Note Textarea */
+.note-textarea {
+  width: 380px;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  resize: none;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Modal Buttons */
+.modal-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.modal-button:hover {
+  opacity: 0.9;
+}
+
+.modal-button.cancel {
+  background: #e0e0e0;
+  color: black;
+}
+
+.modal-button:not(.cancel) {
+  background: #007bff;
+  color: white;
+}

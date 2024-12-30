@@ -23,6 +23,11 @@ const AccountsNor = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState(initialData);
 
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [actionTaken, setActionTaken] = useState("");
+
   // Handle search functionality
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
@@ -38,11 +43,29 @@ const AccountsNor = () => {
     setFilteredData(filtered);
   };
 
+  // Open modal
+  const openModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setActionTaken("");
+  };
+
+  // Handle submit
+  const handleSubmit = () => {
+    console.log("Action Taken Submitted:", { actionTaken, selectedItem });
+    closeModal();
+  };
+
   return (
     <div className="AccountsNor-page">
       {/* Full-width Header Bar */}
       <div className="header-bar">
-        <h1>Accounts Section - Normal </h1>
+        <h1>Accounts Section - Normal</h1>
       </div>
 
       {/* Search Bar */}
@@ -79,7 +102,12 @@ const AccountsNor = () => {
                   <td>{item.subject}</td>
                   <td>{item.officerNo}</td>
                   <td>
-                    <button className="note-button">Action</button>
+                    <button
+                      className="note-button"
+                      onClick={() => openModal(item)}
+                    >
+                      Action
+                    </button>
                   </td>
                 </tr>
               ))
@@ -93,6 +121,33 @@ const AccountsNor = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Action</h2>
+            <p><strong>Date:</strong> {selectedItem?.date}</p>
+            <p><strong>By:</strong> {selectedItem?.officerNo}</p>
+            <label htmlFor="actionTaken"><strong>Action Taken:</strong></label>
+            <textarea
+              id="actionTaken"
+              value={actionTaken}
+              onChange={(e) => setActionTaken(e.target.value)}
+              placeholder="Enter action taken here..."
+              className="note-textarea"
+            ></textarea>
+            <div className="modal-actions">
+              <button className="modal-button" onClick={handleSubmit}>
+                Submit
+              </button>
+              <button className="modal-button cancel" onClick={closeModal}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

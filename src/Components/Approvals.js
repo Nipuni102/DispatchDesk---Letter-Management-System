@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Approvals.css";
 
 const Approvals = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedApproval, setSelectedApproval] = useState(null);
+  const [note, setNote] = useState("");
+
   const approvalsData = [
     {
       date: "2024-12-01",
@@ -20,6 +24,24 @@ const Approvals = () => {
       officerNo: "Officer 2",
     },
   ];
+
+  // Handle opening the modal
+  const openModal = (approval) => {
+    setSelectedApproval(approval);
+    setIsModalOpen(true);
+  };
+
+  // Handle closing the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNote("");
+  };
+
+  // Handle submitting the note
+  const handleSubmit = () => {
+    console.log("Approval Note Submitted:", { note, selectedApproval });
+    closeModal();
+  };
 
   return (
     <div className="approvals-page">
@@ -52,13 +74,44 @@ const Approvals = () => {
                 <td>{item.section}</td>
                 <td>{item.officerNo}</td>
                 <td>
-                  <button className="note-button">Note</button>
+                  <button
+                    className="note-button"
+                    onClick={() => openModal(item)}
+                  >
+                    Note
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Note</h2>
+            <p>Subject: {selectedApproval?.subject}</p>
+            <p>Date: {selectedApproval?.date}</p>
+            
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Enter your note here..."
+              className="note-textarea"
+            ></textarea>
+            <div className="modal-actions">
+              <button className="modal-button" onClick={handleSubmit}>
+                Approve
+              </button>
+              <button className="modal-button cancel" onClick={closeModal}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
