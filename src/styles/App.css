@@ -46,7 +46,7 @@
 }
 
 .main {
-  margin-left: 110px; /* Match sidebar width */
+  margin-left: 260px; /* Match sidebar width */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -62,80 +62,125 @@
 }
 
 
-
-/* Sidebar.css */
-/* Sidebar styles */
-/* Sidebar styles */
+/* Sidebar container */
 .sidebar {
-  width: 250px;
-  background-color: #343a40;
-  height: 105vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-top: 20px;
+  background-color: #1E3A8A; /* Deep blue background */
   color: white;
-  z-index: 1000;
-  
+  height: 100vh;
+  width: 240px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Scroll for overflow */
 }
 
+/* Sidebar links and buttons */
 .sidebar ul {
-  list-style: none;
+  list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar ul li {
-  padding: 10px 20px;
+  margin-bottom: 15px;
 }
 
-.sidebar ul li a {
-  color: white;
+.sidebar a,
+.sidebar button {
   text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
   display: block;
-  transition: all 0.3s;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.sidebar ul li a:hover {
-  background-color: #495057;
-  border-radius: 5px;
+.sidebar a:hover,
+.sidebar button:hover,
+.sidebar-dropdown-btn:hover {
+  background-color: #37468F; /* Lighter blue on hover */
+  color: #B2C2FF; /* Light text color */
 }
 
+/* Active links */
+.sidebar a.active {
+  background-color: #37468F;
+  color: #B2C2FF;
+}
+
+/* Dropdown Button Styles */
 .sidebar-dropdown-btn {
   background: none;
-  color: white;
   border: none;
+  color: white;
   font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
   text-align: left;
+  padding: 12px 15px;
   width: 100%;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.sidebar-dropdown-btn:hover {
-  background-color: #495057;
+.sidebar-dropdown-btn:focus {
+  outline: none;
 }
 
+/* Submenu styles */
 .sidebar-submenu {
-  list-style: none;
-  padding-left: 20px;
+  list-style-type: none;
+  padding: 0;
+  margin-left: 20px; /* Indent submenu */
 }
 
 .sidebar-submenu li {
-  padding: 5px 0;
+  margin-bottom: 10px;
 }
 
-.sidebar-submenu li ul {
-  padding-left: 15px;
+.sidebar-submenu a {
+  font-size: 14px; /* Smaller font for submenu items */
+  padding: 8px 12px;
+  background-color: #2A4BA0; /* Slightly lighter blue */
+  border-radius: 6px;
 }
 
-.sidebar-submenu li a {
-  color: #ccc;
-  font-size: 14px;
-  text-decoration: none;
+.sidebar-submenu a:hover {
+  background-color: #4865BF; /* Hover color for submenu */
+  color: #ffffff;
 }
 
-.sidebar-submenu li a:hover {
-  color: white;
+/* Smooth hover effect for links */
+.sidebar a:hover i,
+.sidebar button:hover i {
+  color: #B2C2FF; /* Lighter color for icons on hover */
 }
+
+/* Divider */
+.sidebar .divider {
+  height: 1px;
+  background-color: #37468F;
+  margin: 20px 0;
+}
+
+/* Scrollable sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: #4865BF;
+  border-radius: 8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #37468F;
+}
+
 
 
 
