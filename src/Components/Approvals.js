@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/Approvals.css";
+import axios from "axios";
 
 const Approvals = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedApproval, setSelectedApproval] = useState(null);
   const [note, setNote] = useState("");
+  const [approvalsData, setApprovalsData] = useState([]);
 
-  const approvalsData = [
-    {
-      date: "2024-12-01",
-      refNo: "12345",
-      company: "ABC Corp",
-      subject: "Budget Allocation",
-      section: "Accounts",
-      officerNo: "Officer 1",
-    },
-    {
-      date: "2024-12-02",
-      refNo: "67890",
-      company: "XYZ Pvt Ltd",
-      subject: "Contract Review",
-      section: "Establishment",
-      officerNo: "Officer 2",
-    },
-  ];
+  useEffect(() => {
+    fetchRecords();
+  }, [])
+  
+  // fetch data from database
+  const fetchRecords = async () => {
+    const url = "http://localhost:4000/api/letter/get"
+
+    try {
+      const response = await axios.get(url);
+
+      if (response.data.success) {
+        setApprovalsData(response.data.data)
+      } else {
+        console.log(response.data.message)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   // Handle opening the modal
   const openModal = (approval) => {
@@ -38,8 +42,22 @@ const Approvals = () => {
   };
 
   // Handle submitting the note
-  const handleSubmit = () => {
-    console.log("Approval Note Submitted:", { note, selectedApproval });
+  const handleSubmit = async () => {
+    const url = "http://localhost:4000/api/letter/approve";
+    const refNo = selectedApproval.refNo;
+    try {
+      const response = await axios.post(url, {refNo, note});
+
+      if (response.data.success) {
+        console.log("Approval Note Submitted:", { note, selectedApproval });
+      } else {
+        alert(response.data.message);
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+    
     closeModal();
   };
 
