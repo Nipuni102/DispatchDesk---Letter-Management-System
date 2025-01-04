@@ -25,9 +25,9 @@ const LoginPage = () => {
 
       if (response.ok) {
         localStorage.setItem("authToken", data.token);
-        navigate("/dashboard"); // Redirect to dashboard after login
+        navigate("/dashboard"); 
       } else {
-        setError(data.message); // Display error message from backend
+        setError(data.message); 
       }
     } catch (error) {
       setError("Error logging in. Please try again.");
