@@ -50,6 +50,8 @@ const Approvals = () => {
 
       if (response.data.success) {
         console.log("Approval Note Submitted:", { note, selectedApproval });
+
+        await fetchRecords();
       } else {
         alert(response.data.message);
       }
