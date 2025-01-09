@@ -1,6 +1,6 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../styles/EstablishmentReg.css";
-import axios from "axios";
 
 const EstablishmentReg = () => {
   // State for managing search and filtered data
@@ -64,10 +64,37 @@ const EstablishmentReg = () => {
   };
 
   // Handle submit
-  const handleSubmit = () => {
-    console.log("Action Taken Submitted:", { actionTaken, selectedItem });
-    closeModal();
+  // Handle submit
+// Handle submit
+const handleSubmit = async () => {
+  if (!selectedItem?.refNo || !actionTaken) {
+    console.error("Ref No. or Action Taken is missing");
+    return;
+  }
+
+  const url = "http://localhost:4000/api/establishment/actionTaken"; // Replace with your actual endpoint
+  const payload = { 
+    refNo: selectedItem.refNo, 
+    actionTaken 
   };
+
+  try {
+    const response = await axios.post(url, payload);
+
+    if (response.data.success) {
+      console.log("Action submitted successfully:", response.data.message);
+      fetchRecords(); // Refresh the table data if needed
+    } else {
+      console.error("Error submitting action:", response.data.message);
+    }
+  } catch (error) {
+    console.error("Error in submission:", error);
+  }
+
+  closeModal();
+};
+
+
 
   return (
     <div className="EstablishmentReg-page">

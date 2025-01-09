@@ -98,6 +98,9 @@ const Sidebar = () => {
             </ul>
           )}
         </li>
+        <li>
+          <Link to="/action-taken-letters">Action Taken Letters</Link>
+        </li>
       </ul>
     </nav>
   );

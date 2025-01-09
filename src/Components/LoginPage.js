@@ -11,27 +11,32 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:4000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ officerNo, password }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("authToken", data.token);
-        navigate("/dashboard"); 
-      } else {
-        setError(data.message); 
-      }
-    } catch (error) {
-      setError("Error logging in. Please try again.");
+    if (officerNo === "test@example.com" && password === "password") {
+      localStorage.setItem("authToken", "dummy-token");
+      navigate("/dashboard"); // Redirect to dashboard after login
+    } else {
+      setError("Invalid email or password");
     }
+    // try {
+    //   const response = await fetch("http://localhost:4000/api/auth/login", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ officerNo, password }),
+    //   });
+
+    //   const data = await response.json();
+
+    //   if (response.ok) {
+    //     localStorage.setItem("authToken", data.token);
+    //     navigate("/dashboard"); 
+    //   } else {
+    //     setError(data.message); 
+    //   }
+    // } catch (error) {
+    //   setError("Error logging in. Please try again.");
+    // }
   };
 
   return (
