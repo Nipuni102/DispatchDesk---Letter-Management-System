@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/NewPage.css";
 import axios from "axios";
 
@@ -13,12 +14,14 @@ const NewPage = () => {
     postType: ""
   });
 
+  const navigate = useNavigate(); // Initialize navigate function
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     console.log(data);
     const url = "http://localhost:4000/api/letter/add";
-    
+
     try {
       const response = await axios.post(url, data);
 
@@ -26,12 +29,26 @@ const NewPage = () => {
         alert(`Form submitted with:
           Section: ${data.section}
           Post Type: ${data.postType}`);
+
+        // Reset form fields after successful submission
+        setData({
+          date: "",
+          refNo: "",
+          company: "",
+          subject: "",
+          section: "",
+          officerNo: "",
+          postType: ""
+        });
+
+        // Navigate to the Dashboard page
+        navigate("/dashboard");
       } else {
         alert(response.data.message);
       }
 
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
@@ -47,16 +64,16 @@ const NewPage = () => {
         {/* Date, Ref No, Company, Subject */}
         <div className="form-group">
           <label htmlFor="date">Date:</label>
-          <input type="date" id="date" name="date" onChange={onChangeHandler} required />
+          <input type="date" id="date" name="date" value={data.date} onChange={onChangeHandler} required />
 
           <label htmlFor="refNo">Ref No:</label>
-          <input type="text" id="refNo" name="refNo" onChange={onChangeHandler} required />
+          <input type="text" id="refNo" name="refNo" value={data.refNo} onChange={onChangeHandler} required />
 
           <label htmlFor="company">Company:</label>
-          <input type="text" id="company" name="company" onChange={onChangeHandler} required />
+          <input type="text" id="company" name="company" value={data.company} onChange={onChangeHandler} required />
 
           <label htmlFor="subject">Subject:</label>
-          <input type="text" id="subject" name="subject" onChange={onChangeHandler} required />
+          <input type="text" id="subject" name="subject" value={data.subject} onChange={onChangeHandler} required />
         </div>
 
         {/* Moved to Section */}
@@ -68,6 +85,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Establishment"
+                checked={data.section === "Establishment"}
                 onChange={onChangeHandler}
               />
               Establishment
@@ -77,6 +95,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Surveying"
+                checked={data.section === "Surveying"}
                 onChange={onChangeHandler}
               />
               Surveying
@@ -86,6 +105,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Accounts"
+                checked={data.section === "Accounts"}
                 onChange={onChangeHandler}
               />
               Accounts
@@ -95,6 +115,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Record Room"
+                checked={data.section === "Record Room"}
                 onChange={onChangeHandler}
               />
               Record Room
@@ -105,7 +126,7 @@ const NewPage = () => {
         {/* Officer No */}
         <div className="form-group">
           <label htmlFor="officerNo">Officer No:</label>
-          <input type="number" id="officerNo" min="1" max="9" name="officerNo" onChange={onChangeHandler} required />
+          <input type="number" id="officerNo" min="1" max="9" name="officerNo" value={data.officerNo} onChange={onChangeHandler} required />
         </div>
 
         {/* Type */}
@@ -117,6 +138,7 @@ const NewPage = () => {
                 type="radio"
                 name="postType"
                 value="Registered Post"
+                checked={data.postType === "Registered Post"}
                 onChange={onChangeHandler}
               />
               Registered Post
@@ -126,6 +148,7 @@ const NewPage = () => {
                 type="radio"
                 name="postType"
                 value="Normal Post"
+                checked={data.postType === "Normal Post"}
                 onChange={onChangeHandler}
               />
               Normal Post
