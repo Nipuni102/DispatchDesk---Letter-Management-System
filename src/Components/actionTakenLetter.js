@@ -34,7 +34,7 @@ const ActionTaken = () => {
     <div className="approvals-page">
       {/* Full-width Header Bar */}
       <div className="header-bar">
-        <h1>Action Taken Letters</h1>
+        <h1>Resolved Letters</h1>
       </div>
     
 
