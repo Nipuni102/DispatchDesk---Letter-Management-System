@@ -42,66 +42,68 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="signup-container">
-      <h2>Sign Up</h2>
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleSignup}>
-        <input
-          type="text"
-          placeholder="Officer Service No"
-          value={officerNo}
-          onChange={(e) => setOfficerNo(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Officer Name"
-          value={officerName}
-          onChange={(e) => setOfficerName(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <div className="password-field">
+    <div className="signup-page-container">
+      <div className="signup-container">
+        <h2>Sign Up</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleSignup}>
           <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            placeholder="Officer Service No"
+            value={officerNo}
+            onChange={(e) => setOfficerNo(e.target.value)}
             required
           />
-          <span
-            className="toggle-password"
-            onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-            {passwordVisible ? "👁️" : "🔒"}
-          </span>
-        </div>
-        <div className="password-field">
           <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            type="text"
+            placeholder="Officer Name"
+            value={officerName}
+            onChange={(e) => setOfficerName(e.target.value)}
             required
           />
-          <span
-            className="toggle-password"
-            onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-            {passwordVisible ? "👁️" : "🔒"}
-          </span>
-        </div>
-        <button type="submit">Sign Up</button>
-      </form>
-      <p className="signin-link">
-        Already have an account? <Link to="/login">Sign in</Link>
-      </p>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <div className="password-field">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? "👁️" : "🔒"}
+            </span>
+          </div>
+          <div className="password-field">
+            <input
+              type={passwordVisible ? "text" : "password"}
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? "👁️" : "🔒"}
+            </span>
+          </div>
+          <button type="submit">Sign Up</button>
+        </form>
+        <p className="signin-link">
+          Already have an account? <Link to="/login">Sign in</Link>
+        </p>
+      </div>
     </div>
   );
 };

@@ -1,14 +1,13 @@
 /* Login Page Styling */
-body {
+.login-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f3f4f6;
+  width: 100%;
 }
 
+/* Existing styles for login container */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -20,6 +19,7 @@ body {
   max-width: 400px;
   width: 100%;
 }
+
 
 .login-container h2 {
   font-size: 24px;
@@ -95,6 +95,7 @@ body {
 .signup-link a {
   color: #007bff;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .signup-link a:hover {

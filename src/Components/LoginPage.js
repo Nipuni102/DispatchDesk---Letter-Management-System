@@ -35,41 +35,44 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleLogin}>
-        <input
-          type="text"
-          placeholder="Officer Service No"
-          value={officerNo}
-          onChange={(e) => setOfficerNo(e.target.value)}
-          required
-        />
-        <div className="password-container">
+    <div className="login-page-container">
+      <div className="login-container">
+        <h2>Login</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleLogin}>
           <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            type="text"
+            placeholder="Officer Service No"
+            value={officerNo}
+            onChange={(e) => setOfficerNo(e.target.value)}
             required
           />
-          <span
-            className="toggle-password"
-            onClick={() => setShowPassword(!showPassword)}
-          >
-            {showPassword ? "👁️" : "🔒"}
-          </span>
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <span
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "👁️" : "🔒"}
+            </span>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <div className="signup-link">
+          <p>
+            Don't have an account? <a href="/signup">Sign up</a>
+          </p>
         </div>
-        <button type="submit">Login</button>
-      </form>
-      <div className="signup-link">
-        <p>
-          Don't have an account? <a href="/signup">Sign up</a>
-        </p>
       </div>
     </div>
   );
+  
 };
 
 export default LoginPage;
