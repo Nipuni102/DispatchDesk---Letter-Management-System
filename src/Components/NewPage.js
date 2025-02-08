@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/NewPage.css";
 import axios from "axios";
+import Select from "react-select";
 
 const NewPage = () => {
+
+  const navigate = useNavigate(); 
+
   const [data, setData] = useState({
     date: "",
     refNo: "",
@@ -13,8 +17,25 @@ const NewPage = () => {
     officerNo: "",
     postType: ""
   });
+  const [users, setUsers] = useState([]);
 
-  const navigate = useNavigate(); // Initialize navigate function
+  useEffect(() => {
+    fetchUsers();
+  }, [])
+
+  const fetchUsers = async () => {
+    const url = "http://localhost:4000/api/letter/getUsers";
+    try {
+      const response = await axios.get(url);
+      if (response.data.success) {
+        setUsers(response.data.data);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -126,7 +147,18 @@ const NewPage = () => {
         {/* Officer No */}
         <div className="form-group">
           <label htmlFor="officerNo">Officer No:</label>
-          <input type="number" id="officerNo" min="1" max="9" name="officerNo" value={data.officerNo} onChange={onChangeHandler} required />
+          <Select
+            options={users.map((user) => ({
+              value: user.officerNo,
+              label: user.officerNo
+            }))}
+            onChange={(selectedOption) =>
+              onChangeHandler("officerNo", selectedOption.value)
+            }
+            placeholder="Select Officer"
+            isSearchable
+          />
+
         </div>
 
         {/* Type */}
