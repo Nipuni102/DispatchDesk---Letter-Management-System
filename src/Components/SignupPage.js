@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../styles/SignupPage.css";
 
 const SignupPage = () => {
@@ -15,7 +15,6 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    // Validate if passwords match
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
@@ -33,9 +32,9 @@ const SignupPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-        navigate("/login"); // Redirect to login after successful signup
+        navigate("/login");
       } else {
-        setError(data.message); // Display error message from backend
+        setError(data.message);
       }
     } catch (error) {
       setError("Error signing up. Please try again.");
@@ -100,6 +99,9 @@ const SignupPage = () => {
         </div>
         <button type="submit">Sign Up</button>
       </form>
+      <p className="signin-link">
+        Already have an account? <Link to="/login">Sign in</Link>
+      </p>
     </div>
   );
 };

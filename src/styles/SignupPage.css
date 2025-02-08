@@ -1,4 +1,3 @@
-/* Signup Page Styling */
 body {
     display: flex;
     justify-content: center;
@@ -85,6 +84,21 @@ body {
     color: red;
     margin-bottom: 10px;
     font-size: 14px;
+  }
+  
+  .signin-link {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .signin-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .signin-link a:hover {
+    text-decoration: underline;
   }
   
   /* Responsive Design */
