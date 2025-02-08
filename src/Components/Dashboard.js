@@ -8,14 +8,12 @@ const Dashboard = () => {
 
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase(); 
-    console.log(query)
     setSearchTerm(query);
 
-    // Call the fetch function with updated query only if not empty
     if (query.trim() !== "") {
       fetchFilteredData(query);
     } else {
-      setFilteredData([]); 
+      setFilteredData([]);
     }
   };
 
@@ -23,17 +21,17 @@ const Dashboard = () => {
     const url = `http://localhost:4000/api/letter/search`;
 
     try {
-        const response = await axios.post(url, { query });
+      const response = await axios.post(url, { query });
 
-        if (response.data.success) {
-            setFilteredData(response.data.data); 
-        } else {
-            console.log("Error:", response.data.message); 
-        }
+      if (response.data.success) {
+        setFilteredData(response.data.data);
+      } else {
+        console.log("Error:", response.data.message);
+      }
     } catch (error) {
-        console.error("Error fetching data:", error); 
+      console.error("Error fetching data:", error);
     }
-};
+  };
 
   return (
     <div className="dashboard-container">
@@ -50,8 +48,8 @@ const Dashboard = () => {
 
       {/* Conditional Rendering for Search Results or Main Content */}
       {searchTerm.trim() ? (
-        <div className="EstablishmentNor-table-container">
-          <table className="EstablishmentNor-table">
+        <div className="result-table-container">
+          <table className="result-table">
             <thead>
               <tr>
                 <th>Date</th>
