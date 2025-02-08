@@ -99,7 +99,7 @@ const Sidebar = () => {
           )}
         </li>
         <li>
-          <Link to="/action-taken-letters">Action Taken Letters</Link>
+          <Link to="/action-taken-letters">Resolved Letters</Link>
         </li>
       </ul>
     </nav>
