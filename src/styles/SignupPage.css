@@ -1,13 +1,18 @@
 /* Signup Page Styling */
-.signup-container {
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f6;
+  }
+  
+  .signup-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center vertically */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center horizontally */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -43,6 +48,25 @@
     outline: none;
   }
   
+  .password-field {
+    position: relative;
+    width: 100%;
+  }
+  
+  .password-field input {
+    padding-right: 40px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #007bff;
+  }
+  
   .signup-container button {
     padding: 12px;
     background-color: #007bff;
@@ -57,22 +81,6 @@
     background-color: #0056b3;
   }
   
-  .password-field {
-    position: relative;
-  }
-  
-  .password-field input {
-    width: 100%;
-  }
-  
-  .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 30%;
-    transform: translateY(-50%);
-    cursor: pointer;
-  }
-  
   .error {
     color: red;
     margin-bottom: 10px;
@@ -83,7 +91,6 @@
   @media (max-width: 500px) {
     .signup-container {
       width: 90%;
-      padding: 15px;
     }
   }
   
