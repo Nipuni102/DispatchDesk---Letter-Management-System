@@ -1,39 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/AccountsNor.css";
+import axios from "axios";
 
 const AccountsNor = () => {
-  const initialData = [
-    {
-      date: "2024-12-01",
-      refNo: "12345",
-      company: "ABC Corp",
-      subject: "Budget Allocation",
-      officerNo: "Officer 1",
-    },
-    {
-      date: "2024-12-02",
-      refNo: "67890",
-      company: "XYZ Pvt Ltd",
-      subject: "Contract Review",
-      officerNo: "Officer 2",
-    },
-  ];
-
   // State for managing search and filtered data
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(initialData);
+  const [filteredData, setFilteredData] = useState([]);
 
   // Modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [actionTaken, setActionTaken] = useState("");
 
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchRecords();
+  }, [])
+  
+  // fetch data from database
+  const fetchRecords = async () => {
+    const url = "http://localhost:4000/api/accounts/getNormal"
+
+    try {
+      const response = await axios.get(url);
+
+      if (response.data.success) {
+        setData(response.data.data)
+        setFilteredData(response.data.data)
+      } else {
+        console.log(response.data.message)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   // Handle search functionality
   const handleSearch = (e) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
 
-    const filtered = initialData.filter(
+    const filtered = data.filter(
       (item) =>
         item.refNo.toLowerCase().includes(query) ||
         item.company.toLowerCase().includes(query) ||
@@ -56,8 +64,31 @@ const AccountsNor = () => {
   };
 
   // Handle submit
-  const handleSubmit = () => {
-    console.log("Action Taken Submitted:", { actionTaken, selectedItem });
+  const handleSubmit = async () => {
+    if (!selectedItem?.refNo || !actionTaken) {
+      console.error("Ref No. or Action Taken is missing");
+      return;
+    }
+  
+    const url = "http://localhost:4000/api/accounts/actionTaken"; // Replace with your actual endpoint
+    const payload = { 
+      refNo: selectedItem.refNo, 
+      actionTaken 
+    };
+  
+    try {
+      const response = await axios.post(url, payload);
+  
+      if (response.data.success) {
+        console.log("Action submitted successfully:", response.data.message);
+        fetchRecords(); // Refresh the table data if needed
+      } else {
+        console.error("Error submitting action:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error in submission:", error);
+    }
+  
     closeModal();
   };
 

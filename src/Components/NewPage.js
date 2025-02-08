@@ -1,15 +1,43 @@
 import React, { useState } from "react";
 import "../styles/NewPage.css";
+import axios from "axios";
 
 const NewPage = () => {
-  const [section, setSection] = useState("");
-  const [postType, setPostType] = useState("");
+  const [data, setData] = useState({
+    date: "",
+    refNo: "",
+    company: "",
+    subject: "",
+    section: "",
+    officerNo: "",
+    postType: ""
+  });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Form submitted with:
-    Section: ${section}
-    Post Type: ${postType}`);
+
+    console.log(data);
+    const url = "http://localhost:4000/api/letter/add";
+    
+    try {
+      const response = await axios.post(url, data);
+
+      if (response.data.success) {
+        alert(`Form submitted with:
+          Section: ${data.section}
+          Post Type: ${data.postType}`);
+      } else {
+        alert(response.data.message);
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+  const onChangeHandler = (event) => {
+    const { name, value } = event.target;
+    setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
@@ -19,16 +47,16 @@ const NewPage = () => {
         {/* Date, Ref No, Company, Subject */}
         <div className="form-group">
           <label htmlFor="date">Date:</label>
-          <input type="date" id="date" required />
+          <input type="date" id="date" name="date" onChange={onChangeHandler} required />
 
           <label htmlFor="refNo">Ref No:</label>
-          <input type="text" id="refNo" required />
+          <input type="text" id="refNo" name="refNo" onChange={onChangeHandler} required />
 
           <label htmlFor="company">Company:</label>
-          <input type="text" id="company" required />
+          <input type="text" id="company" name="company" onChange={onChangeHandler} required />
 
           <label htmlFor="subject">Subject:</label>
-          <input type="text" id="subject" required />
+          <input type="text" id="subject" name="subject" onChange={onChangeHandler} required />
         </div>
 
         {/* Moved to Section */}
@@ -40,7 +68,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Establishment"
-                onChange={(e) => setSection(e.target.value)}
+                onChange={onChangeHandler}
               />
               Establishment
             </label>
@@ -49,7 +77,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Surveying"
-                onChange={(e) => setSection(e.target.value)}
+                onChange={onChangeHandler}
               />
               Surveying
             </label>
@@ -58,7 +86,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Accounts"
-                onChange={(e) => setSection(e.target.value)}
+                onChange={onChangeHandler}
               />
               Accounts
             </label>
@@ -67,7 +95,7 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Record Room"
-                onChange={(e) => setSection(e.target.value)}
+                onChange={onChangeHandler}
               />
               Record Room
             </label>
@@ -77,7 +105,7 @@ const NewPage = () => {
         {/* Officer No */}
         <div className="form-group">
           <label htmlFor="officerNo">Officer No:</label>
-          <input type="number" id="officerNo" min="1" max="9" required />
+          <input type="number" id="officerNo" min="1" max="9" name="officerNo" onChange={onChangeHandler} required />
         </div>
 
         {/* Type */}
@@ -89,7 +117,7 @@ const NewPage = () => {
                 type="radio"
                 name="postType"
                 value="Registered Post"
-                onChange={(e) => setPostType(e.target.value)}
+                onChange={onChangeHandler}
               />
               Registered Post
             </label>
@@ -98,7 +126,7 @@ const NewPage = () => {
                 type="radio"
                 name="postType"
                 value="Normal Post"
-                onChange={(e) => setPostType(e.target.value)}
+                onChange={onChangeHandler}
               />
               Normal Post
             </label>
