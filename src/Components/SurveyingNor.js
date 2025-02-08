@@ -64,8 +64,31 @@ const SurveyingNor = () => {
   };
 
   // Handle submit
-  const handleSubmit = () => {
-    console.log("Action Taken Submitted:", { actionTaken, selectedItem });
+  const handleSubmit = async () => {
+    if (!selectedItem?.refNo || !actionTaken) {
+      console.error("Ref No. or Action Taken is missing");
+      return;
+    }
+  
+    const url = "http://localhost:4000/api/surveying/actionTaken"; // Replace with your actual endpoint
+    const payload = { 
+      refNo: selectedItem.refNo, 
+      actionTaken 
+    };
+  
+    try {
+      const response = await axios.post(url, payload);
+  
+      if (response.data.success) {
+        console.log("Action submitted successfully:", response.data.message);
+        fetchRecords(); // Refresh the table data if needed
+      } else {
+        console.error("Error submitting action:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error in submission:", error);
+    }
+  
     closeModal();
   };
 
