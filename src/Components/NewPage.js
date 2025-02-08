@@ -74,9 +74,16 @@ const NewPage = () => {
   };
 
   const onChangeHandler = (event) => {
-    const { name, value } = event.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
+    if (event.target) {
+      // Normal input fields
+      const { name, value } = event.target;
+      setData((prevData) => ({ ...prevData, [name]: value }));
+    } else {
+      // Third-party Select component
+      setData((prevData) => ({ ...prevData, officerNo: event.value }));
+    }
   };
+  
 
   return (
     <div className="new-page-container">
@@ -148,13 +155,12 @@ const NewPage = () => {
         <div className="form-group">
           <label htmlFor="officerNo">Officer No:</label>
           <Select
+            name="officerNo"
             options={users.map((user) => ({
               value: user.officerNo,
               label: user.officerNo
             }))}
-            onChange={(selectedOption) =>
-              onChangeHandler("officerNo", selectedOption.value)
-            }
+            onChange={onChangeHandler}
             placeholder="Select Officer"
             isSearchable
           />
