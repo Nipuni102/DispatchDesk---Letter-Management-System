@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import "../styles/NewPage.css";
 import axios from "axios";
 
@@ -12,6 +13,8 @@ const NewPage = () => {
     officerNo: "",
     postType: ""
   });
+
+  const navigate = useNavigate(); // Initialize navigate function
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,6 +40,9 @@ const NewPage = () => {
           officerNo: "",
           postType: ""
         });
+
+        // Navigate to the Dashboard page
+        navigate("/dashboard");
       } else {
         alert(response.data.message);
       }
