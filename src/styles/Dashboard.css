@@ -1,39 +1,106 @@
-
-.dashboard-content {
-    padding: 20px;
-    background-color: #f4f4f4;
-    height: 100vh;
-    /* To leave space for the sidebar */
-    display: flex; /* Use flexbox for side-by-side alignment */
-  justify-content: space-between; /* Ensure space between content and image */
-  align-items: flex-start; /* Align items to the top */
-  gap: 20px;
-  }
-  .content {
-    overflow-y: auto; /* Disable scrolling for the dashboard */
-    padding: 20px; /* Keep padding for content layout */
-  }
-  .dashboard-content h1 {
-    color: #007bff;
-    font-size: 28px;
-    margin-bottom: 10px;
-
-  }
-  
-  .dashboard-content p {
-    color: #555;
-    font-size: 16px;
-  }
-  /* Dashboard.css */
+/* General Styles */
 .dashboard-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   padding: 20px;
   background-color: #f4f4f4;
-  flex-direction: column; /* Ensure top (search) and main (content) sections are stacked */
+  min-height: 100vh;
+  gap: 10px;
+}
+
+/* Search Bar */
+.dashboard-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Table Container */
+.result-table-container {
+  width: 90%;
+  padding: 20%;
+  margin-top: 10px;
+  margin-left: 20px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-grow: 1;
+  border-radius: 10px; /* Rounded corners for the container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  background-color: #ffffff;
+}
+
+/* Table Styles */
+.result-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.EstablishmentNor-table th,
+  .EstablishmentNor-table td {
+    padding: 12px 15px;
+    font-size: 14px;
+    text-align: left;
+    
+  }
+  
+.result-table th {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.result-table td {
+  padding: 10px;
+  background-color: white;
+    color: #555;
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); /* Subtle cell shadow */
+    border-radius: 6px;
+}
+
+.result-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.result-table .no-results {
+  text-align: center;
+  font-weight: bold;
+  color: #777;
+}
+
+/* Dashboard Content (Hidden When Searching) */
+.dashboard-content {
+  padding: 20px;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 20px;
-  height: calc(100vh - 50px); /* Adjust for header height */
 }
 
 .dashboard-left {
@@ -91,27 +158,44 @@
 }
 
 .dashboard-image {
- 
   max-width: 100%;
   height: auto;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.dashboard-top {
-  display: flex;
-  justify-content: flex-start; /* Align search bar to the left */
-}
-.search-input {
-  width: 300px; /* Set the search bar width */
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 20px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+
+/* Hide dashboard content when searching */
+.dashboard-content.hidden {
+  display: none;
 }
 
-.search-input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect on focus */
+.result-table th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.result-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.result-table tr {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.result-table tr:hover {
+  background-color: #e0e7ff; /* Add hover effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+  transform: translateY(-2px); /* Elevate row on hover */
+  transition: all 0.3s ease;
+}
+
+/* First and Last column rounding */
+.result-table tr td:first-child {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.result-table tr td:last-child {
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

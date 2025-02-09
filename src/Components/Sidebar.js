@@ -98,6 +98,9 @@ const Sidebar = () => {
             </ul>
           )}
         </li>
+        <li>
+          <Link to="/action-taken-letters">Resolved Letters</Link>
+        </li>
       </ul>
     </nav>
   );

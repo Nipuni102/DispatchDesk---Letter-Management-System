@@ -1,16 +1,89 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/NewPage.css";
+import axios from "axios";
+import Select from "react-select";
 
 const NewPage = () => {
-  const [section, setSection] = useState("");
-  const [postType, setPostType] = useState("");
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate(); 
+
+  const [data, setData] = useState({
+    date: "",
+    refNo: "",
+    company: "",
+    subject: "",
+    section: "",
+    officerNo: "",
+    postType: ""
+  });
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [])
+
+  const fetchUsers = async () => {
+    const url = "http://localhost:4000/api/letter/getUsers";
+    try {
+      const response = await axios.get(url);
+      if (response.data.success) {
+        setUsers(response.data.data);
+      } else {
+        console.log(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Form submitted with:
-    Section: ${section}
-    Post Type: ${postType}`);
+
+    console.log(data);
+    const url = "http://localhost:4000/api/letter/add";
+
+    try {
+      const response = await axios.post(url, data);
+
+      if (response.data.success) {
+        alert(`Form submitted with:
+          Section: ${data.section}
+          Post Type: ${data.postType}`);
+
+        // Reset form fields after successful submission
+        setData({
+          date: "",
+          refNo: "",
+          company: "",
+          subject: "",
+          section: "",
+          officerNo: "",
+          postType: ""
+        });
+
+        // Navigate to the Dashboard page
+        navigate("/dashboard");
+      } else {
+        alert(response.data.message);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const onChangeHandler = (event) => {
+    if (event.target) {
+      // Normal input fields
+      const { name, value } = event.target;
+      setData((prevData) => ({ ...prevData, [name]: value }));
+    } else {
+      // Third-party Select component
+      setData((prevData) => ({ ...prevData, officerNo: event.value }));
+    }
+  };
+  
 
   return (
     <div className="new-page-container">
@@ -19,16 +92,16 @@ const NewPage = () => {
         {/* Date, Ref No, Company, Subject */}
         <div className="form-group">
           <label htmlFor="date">Date:</label>
-          <input type="date" id="date" required />
+          <input type="date" id="date" name="date" value={data.date} onChange={onChangeHandler} required />
 
           <label htmlFor="refNo">Ref No:</label>
-          <input type="text" id="refNo" required />
+          <input type="text" id="refNo" name="refNo" value={data.refNo} onChange={onChangeHandler} required />
 
           <label htmlFor="company">Company:</label>
-          <input type="text" id="company" required />
+          <input type="text" id="company" name="company" value={data.company} onChange={onChangeHandler} required />
 
           <label htmlFor="subject">Subject:</label>
-          <input type="text" id="subject" required />
+          <input type="text" id="subject" name="subject" value={data.subject} onChange={onChangeHandler} required />
         </div>
 
         {/* Moved to Section */}
@@ -40,7 +113,8 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Establishment"
-                onChange={(e) => setSection(e.target.value)}
+                checked={data.section === "Establishment"}
+                onChange={onChangeHandler}
               />
               Establishment
             </label>
@@ -49,7 +123,8 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Surveying"
-                onChange={(e) => setSection(e.target.value)}
+                checked={data.section === "Surveying"}
+                onChange={onChangeHandler}
               />
               Surveying
             </label>
@@ -58,7 +133,8 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Accounts"
-                onChange={(e) => setSection(e.target.value)}
+                checked={data.section === "Accounts"}
+                onChange={onChangeHandler}
               />
               Accounts
             </label>
@@ -67,7 +143,8 @@ const NewPage = () => {
                 type="radio"
                 name="section"
                 value="Record Room"
-                onChange={(e) => setSection(e.target.value)}
+                checked={data.section === "Record Room"}
+                onChange={onChangeHandler}
               />
               Record Room
             </label>
@@ -77,7 +154,17 @@ const NewPage = () => {
         {/* Officer No */}
         <div className="form-group">
           <label htmlFor="officerNo">Officer No:</label>
-          <input type="number" id="officerNo" min="1" max="9" required />
+          <Select
+            name="officerNo"
+            options={users.map((user) => ({
+              value: user.officerNo,
+              label: user.officerNo
+            }))}
+            onChange={onChangeHandler}
+            placeholder="Select Officer"
+            isSearchable
+          />
+
         </div>
 
         {/* Type */}
@@ -89,7 +176,8 @@ const NewPage = () => {
                 type="radio"
                 name="postType"
                 value="Registered Post"
-                onChange={(e) => setPostType(e.target.value)}
+                checked={data.postType === "Registered Post"}
+                onChange={onChangeHandler}
               />
               Registered Post
             </label>
@@ -98,7 +186,8 @@ const NewPage = () => {
                 type="radio"
                 name="postType"
                 value="Normal Post"
-                onChange={(e) => setPostType(e.target.value)}
+                checked={data.postType === "Normal Post"}
+                onChange={onChangeHandler}
               />
               Normal Post
             </label>
